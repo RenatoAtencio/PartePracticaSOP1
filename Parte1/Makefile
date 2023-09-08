@@ -1,27 +1,33 @@
 CXX=g++
-#LIBRARY=-L/usr/local/include/libcppsim
-#INCLUDE=-I/usr/local/include/nlohmann -I/usr/local/include/libcppsim
-CXXFLAGS=-std=c++14 -O3 -ggdb -Wall -w -lm -g #-lcppsim $(INCLUDE) $(LIBRARY)
+CXXFLAGS=-std=c++14 -O3 -ggdb -Wall -w -lm -g
 
+SRCDIR=src
+OBJDIR=obj
 
-OBJS1=obj/main.o 
-#OBJS2=obj/platformhardware.o 
+# Lista de archivos fuente
+SRCS=$(wildcard $(SRCDIR)/*.cpp)
+
+# Lista de archivos objeto generados a partir de los archivos fuente
+OBJS=$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
+
+# Archivo fuente principal
+MAIN_SRC=$(SRCDIR)/main.cpp
+
+# Archivo objeto principal
+MAIN_OBJ=$(OBJDIR)/main.o
 
 TARGET=app
 
-$(TARGET): $(OBJS1) #$(OBJS2) $(OBJS3) $(OBJS4) $(OBJS5) $(OBJS6) $(OBJS7)
-	        $(CXX) -o $@ $^ $(CXXFLAGS)
+$(TARGET): $(OBJS)
+	$(CXX) -o $@ $^ $(CXXFLAGS)
 
-obj/main.o:src/main.cpp
-#obj/platformsim.o:src/platformsim.cpp include/platformsim.h
-
-obj/%.o:
+# Regla de compilación para los archivos fuente en src/
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS)
-clean:
-	${RM} $(TARGET)
-	${RM} obj/*.o
-	${RM} *~
 
-all:
-	make clean
-	make
+clean:
+	rm -f $(TARGET)
+	rm -f $(OBJDIR)/*.o
+	rm -f *~
+
+all: clean $(TARGET)

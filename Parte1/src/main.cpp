@@ -10,38 +10,48 @@ int main(int argc, char* argv[])
 {
     char c;
     string nombreUsuario, password, NumerosStr;
-    vector <int> vectorNumeros;
     while ((c = getopt(argc, argv, "u:p:v:")) != -1) {
         switch (c) {
         case 'u': { // user
             nombreUsuario = optarg;
             break;
         }
-        case 'p':{
+        case 'p': {
             password = optarg;
             break;
         }
         case 'v': { // string de los numeros
             NumerosStr = optarg;
-            vectorNumeros = separarStringPorComaVectorInt(NumerosStr);
             break;
         }
         }
     }
 
-    // hay que ver si el user es admin y si la contraseña es admin, si es asi entonces entra en modo administrador
-    if ((nombreUsuario == "admin") && (password == "admin")){
-        // entro como admin
-    }else{
-        // ver si el usuario esta en la base de datos
+
+    if ((nombreUsuario == "admin") && (password == "admin")) {
+        string permisos = "1,2,3";
+        // modo admin
     }
-
-
-    // se crea el usuario "user"
-    usuario user(nombreUsuario,password,vectorNumeros);
-
-
-
-
+    else {
+        // modo user normal
+        vector<string> posibleUser = verificarUserInDB(nombreUsuario);
+        if (!posibleUser.empty()) {
+            // encontro el user
+            if (posibleUser[1] == password) {
+                // user existe y la contraseña es correcta, se crea user como objeto usuario
+                string permisos = "2,3";
+                usuario user = crearUsuario(nombreUsuario,password,NumerosStr,permisos);
+                cout << "user encontrado y verificado" << endl;
+            }
+            else {
+                // contraseña incorrecta
+                cout << "User encontrado pero la contraseña es incorrecta" << endl;
+            }
+        }
+        else {
+            // user no esta en la DB
+            cout << "User not found" << endl;
+        }
+    }
     return 0;
 }

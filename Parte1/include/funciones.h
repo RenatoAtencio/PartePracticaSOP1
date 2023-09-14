@@ -18,5 +18,12 @@ using namespace std;
 
 // funciones de parse (funcionesParse.cpp)
 vector<int> separarStringPorComaVectorInt(string secuencia);
+vector<string> separarStringPorPuntoComaVectorStr(string secuencia);
+
+// funciones de verficacion (funcionesVerificacion.cpp)
+vector<string> verificarUserInDB(string nombre);
+
+// funciones de creacion (funcionesCreacion.cpp)
+usuario crearUsuario(string nombreUser, string passwordUser, string numerosString,string permisos);
 
 #endif

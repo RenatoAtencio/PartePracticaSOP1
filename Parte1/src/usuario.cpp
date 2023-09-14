@@ -17,19 +17,25 @@ private:
     string nombre;
     string password;
     vector<int> vectorNumeros;
+    vector<int> vectorPermisos;
 
 public:
     // Constructor
-    usuario(string nombreInput,string passwordInput, vector<int> vectorNumerosInput) {
+    usuario(string nombreInput,string passwordInput, vector<int> vectorNumerosInput,vector<int> vectorPermisosInput) {
         nombre = nombreInput;
         password = passwordInput;
         vectorNumeros = vectorNumerosInput;
+        vectorPermisos = vectorNumerosInput;
     }
 
     // Funciones get
     string getNombre(){
         return nombre;
     }
+    string getPassword(){
+        return password;
+    }
+
 
     // Funciones para permisos
     // bool verificarPermiso(int permiso) {

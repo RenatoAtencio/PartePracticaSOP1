@@ -9,6 +9,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     char c;
+    int opcion;
     string nombreUsuario, password, NumerosStr;
     while ((c = getopt(argc, argv, "u:p:v:")) != -1) {
         switch (c) {
@@ -27,6 +28,7 @@ int main(int argc, char* argv[])
         }
     }
 
+    system("clear");
 
     if ((nombreUsuario == "admin") && (password == "admin")) {
         string permisos = "1,2,3";
@@ -41,7 +43,15 @@ int main(int argc, char* argv[])
                 // user existe y la contraseña es correcta, se crea user como objeto usuario
                 string permisos = "2,3";
                 usuario user = crearUsuario(nombreUsuario,password,NumerosStr,permisos);
-                cout << "user encontrado y verificado" << endl;
+                bool seguir = true;
+                while (seguir){                
+                    mostrarMenu(&user);
+                    cout << "Ingrese Opcion: ";
+                    cin >> opcion;
+                    verSeleccion(opcion,seguir,&user);
+                    system("clear");
+                }
+
             }
             else {
                 // contraseña incorrecta

@@ -13,6 +13,8 @@
 #include <algorithm>
 #include <map>
 #include <cctype>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -25,5 +27,10 @@ vector<string> verificarUserInDB(string nombre);
 
 // funciones de creacion (funcionesCreacion.cpp)
 usuario crearUsuario(string nombreUser, string passwordUser, string numerosString,string permisos);
+
+// funciones de menu (funcionesMenu.cpp)
+void mostrarMenu(usuario* user);
+void verSeleccion(int userInput, bool& seguir, usuario* user);
+void mostrarSeleccion(usuario* user);
 
 #endif

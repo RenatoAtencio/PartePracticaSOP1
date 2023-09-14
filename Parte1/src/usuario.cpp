@@ -69,10 +69,16 @@ public:
     }
 
     void imprimirMensaje(){
-        cout << "Imprimir Msg" << endl;
+        pid_t pid = getpid();
+        cout << "Hola como estas " << nombre << " PID = " << pid << endl;
     }
 
     void ordenarVector(){
-        cout << "Ordenar Vector" << endl;
+        sort(vectorNumeros.begin(),vectorNumeros.end());
+        cout << "Vector ordenado (PID = " << getpid() << ")" << endl;
+        for (int num : vectorNumeros){
+            cout << num << " ";
+        }
+        cout << endl;
     }
 };

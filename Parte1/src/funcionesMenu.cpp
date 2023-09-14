@@ -1,3 +1,4 @@
+#include <sys/wait.h>
 #include "../include/funciones.h"
 
 void verSeleccion(int userInput, bool& seguir, usuario* user) {
@@ -5,12 +6,12 @@ void verSeleccion(int userInput, bool& seguir, usuario* user) {
     case 0: { // Salir
         seguir = false;
         system("clear");
-        user -> salir();
+        user->salir();
         break;
     }
     case 1: { // Crear User
-        if (user -> verificarPermiso(1)) {
-            user -> setOpcion(1);
+        if (user->verificarPermiso(1)) {
+            user->setOpcion(1);
         }
         else {
             cout << "No tiene este permiso" << endl;
@@ -18,8 +19,8 @@ void verSeleccion(int userInput, bool& seguir, usuario* user) {
         break;
     }
     case 2: { // Imprimir MSG
-        if (user -> verificarPermiso(2)) {
-            user -> setOpcion(2);
+        if (user->verificarPermiso(2)) {
+            user->setOpcion(2);
         }
         else {
             cout << "No tiene este permiso" << endl;
@@ -27,16 +28,16 @@ void verSeleccion(int userInput, bool& seguir, usuario* user) {
         break;
     }
     case 3: { // Ordenar Vector
-        if (user -> verificarPermiso(3)) {
-            user -> setOpcion(3);
+        if (user->verificarPermiso(3)) {
+            user->setOpcion(3);
         }
         else {
             cout << "No tiene este permiso" << endl;
         }
         break;
     }
-    default : {
-        user -> setOpcion(-2);
+    default: {
+        user->setOpcion(-2);
     }
     }
 }
@@ -50,33 +51,47 @@ void mostrarMenu(usuario* user) {
     cout << "##################" << endl;
     cout << "0) Salir" << endl;
     cout << "1) Crear Usuario" << endl;
-    cout << "0) Imprimir mensaje para el usuario" << endl;
-    cout << "0) Ordenar vector" << endl;
+    cout << "2) Imprimir mensaje para el usuario" << endl;
+    cout << "3) Ordenar vector" << endl;
 
     // en esta parte deberia usar otra funcion para recibir la respuesta
 }
 
 void mostrarSeleccion(usuario* user) {
     cout << "Respuesta de la ejecucion" << endl;
-    switch (user -> getOpcion()) {
+    switch (user->getOpcion()) {
     case -1: {
         cout << "------------------" << endl;
         break;
     }
     // case 0 nunca se logra porque el verSeleccion hace que seguir se vuelva false
-    case 1: {
-        user -> crearUser();
+    case 1: { // crear user (no es proceso externo)
+        user->crearUser();
         break;
     }
-    case 2: {
-        user -> imprimirMensaje();
+    case 2: { // escribe msg (es proceso externo)
+        pid_t pid = fork();
+        if (pid == 0) {
+            user->imprimirMensaje();
+            exit(0);
+        }
+        else {
+            wait(NULL);
+        }
         break;
     }
-    case 3: {
-        user -> ordenarVector();
+    case 3: { // ordena vector (es proceso externo)
+        pid_t pid = fork();
+        if (pid == 0) {
+            user->ordenarVector();
+            exit(0);
+        }
+        else {
+            wait(NULL);
+        }
         break;
     }
-    default : {
+    default: {
         cout << "No tiene este permiso" << endl;
     }
     }

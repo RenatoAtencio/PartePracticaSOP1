@@ -29,7 +29,7 @@ public:
         password = passwordInput;
         opcionSeleccionada = opcionSeleccionadaInput;
         vectorNumeros = vectorNumerosInput;
-        vectorPermisos = vectorNumerosInput;
+        vectorPermisos = vectorPermisosInput;
     }
 
     // Funciones Set
@@ -43,6 +43,10 @@ public:
     }
     string getPassword(){
         return password;
+    }
+
+    vector<int> getPermisos(){
+        return vectorPermisos;
     }
 
     int getOpcion(){
@@ -65,7 +69,32 @@ public:
     }
 
     void crearUser(){
-        cout << "Crear User" << endl;
+        string newUsername, newPassword, respuesta = "-1";
+        bool incorrecto = true;
+        while (incorrecto){
+            cout << "Ingrese el nombre del nuevo usuario: ";
+            cin >> newUsername;
+            cout << "Ingrese la password del nuevo usuario: ";
+            cin >> newPassword;
+            while ((respuesta != "s") && (respuesta !="n")){
+                cout << "El nombre: " << newUsername << " y contraseña: " << newPassword << " son correctos? (s/n) : ";
+                cin >> respuesta;
+            }
+            if (respuesta == "s"){
+                incorrecto = false;
+            }
+            respuesta = "-1";
+        }
+
+        ofstream file(getenv("DB_USERS"), std::ios::app);
+        if (file.is_open()) {
+            file << newUsername << ";" << newPassword << endl;
+            file.close();
+            cout << "User agregado" << endl;
+        }
+        else {
+            cout << "No se pudo abrir el archivo." << endl;
+        }
     }
 
     void imprimirMensaje(){

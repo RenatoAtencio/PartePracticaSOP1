@@ -12,9 +12,8 @@ void verSeleccion(int userInput, bool& seguir, usuario* user) {
     case 1: { // Crear User
         if (user->verificarPermiso(1)) {
             user->setOpcion(1);
-        }
-        else {
-            cout << "No tiene este permiso" << endl;
+        }else{
+            user -> setOpcion(-2);
         }
         break;
     }
@@ -22,22 +21,16 @@ void verSeleccion(int userInput, bool& seguir, usuario* user) {
         if (user->verificarPermiso(2)) {
             user->setOpcion(2);
         }
-        else {
-            cout << "No tiene este permiso" << endl;
-        }
         break;
     }
     case 3: { // Ordenar Vector
         if (user->verificarPermiso(3)) {
             user->setOpcion(3);
         }
-        else {
-            cout << "No tiene este permiso" << endl;
-        }
         break;
     }
     default: {
-        user->setOpcion(-2);
+        user->setOpcion(-3);
     }
     }
 }
@@ -53,13 +46,16 @@ void mostrarMenu(usuario* user) {
     cout << "1) Crear Usuario" << endl;
     cout << "2) Imprimir mensaje para el usuario" << endl;
     cout << "3) Ordenar vector" << endl;
-
-    // en esta parte deberia usar otra funcion para recibir la respuesta
 }
 
+// si opcion = -1, recien comenzo el programa; si =-2 entonces no tiene ese permiso; si =-3 no esta implementada (cuando presiona cualquier num)
 void mostrarSeleccion(usuario* user) {
     cout << "Respuesta de la ejecucion" << endl;
     switch (user->getOpcion()) {
+    case -2: {
+        cout << "No tiene este permiso" << endl;
+        break;
+    }
     case -1: {
         cout << "------------------" << endl;
         break;
@@ -92,7 +88,7 @@ void mostrarSeleccion(usuario* user) {
         break;
     }
     default: {
-        cout << "No tiene este permiso" << endl;
+        cout << "Funcion no implementada" << endl;
     }
     }
 }

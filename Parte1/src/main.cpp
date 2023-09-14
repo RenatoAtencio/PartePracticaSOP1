@@ -6,11 +6,12 @@
 
 using namespace std;
 
+void comenzarEjecucion(string permisos, string nombreUsuario, string password, string numerosStr);
+
 int main(int argc, char* argv[])
 {
     char c;
-    int opcion;
-    string nombreUsuario, password, NumerosStr;
+    string nombreUsuario, password, numerosStr;
     while ((c = getopt(argc, argv, "u:p:v:")) != -1) {
         switch (c) {
         case 'u': { // user
@@ -22,7 +23,7 @@ int main(int argc, char* argv[])
             break;
         }
         case 'v': { // string de los numeros
-            NumerosStr = optarg;
+            numerosStr = optarg;
             break;
         }
         }
@@ -31,8 +32,9 @@ int main(int argc, char* argv[])
     system("clear");
 
     if ((nombreUsuario == "admin") && (password == "admin")) {
-        string permisos = "1,2,3";
         // modo admin
+        string permisos = "1,2,3";
+        comenzarEjecucion(permisos,nombreUsuario,password,numerosStr);
     }
     else {
         // modo user normal
@@ -42,16 +44,7 @@ int main(int argc, char* argv[])
             if (posibleUser[1] == password) {
                 // user existe y la contraseña es correcta, se crea user como objeto usuario
                 string permisos = "2,3";
-                usuario user = crearUsuario(nombreUsuario,password,NumerosStr,permisos);
-                bool seguir = true;
-                while (seguir){                
-                    mostrarMenu(&user);
-                    cout << "Ingrese Opcion: ";
-                    cin >> opcion;
-                    verSeleccion(opcion,seguir,&user);
-                    system("clear");
-                }
-
+                comenzarEjecucion(permisos,nombreUsuario,password,numerosStr);
             }
             else {
                 // contraseña incorrecta
@@ -64,4 +57,17 @@ int main(int argc, char* argv[])
         }
     }
     return 0;
+}
+
+void comenzarEjecucion(string permisos, string nombreUsuario, string password, string numerosStr) {
+    int opcion;
+    usuario user = crearUsuario(nombreUsuario, password, numerosStr, permisos);
+    bool seguir = true;
+    while (seguir) {
+        mostrarMenu(&user);
+        cout << "Ingrese Opcion: ";
+        cin >> opcion;
+        verSeleccion(opcion, seguir, &user);
+        system("clear");
+    }
 }

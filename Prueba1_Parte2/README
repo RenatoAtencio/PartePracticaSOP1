@@ -1,0 +1,24 @@
+El archivo de extension env contiene lo siguiente:
+EXTENSION = txt
+PATH_FILES_IN = Prueba1_Parte2/Input
+PATH_FILES_OUT = Prueba1_Parte2/Output
+AMOUNT_THREADS=4
+
+Donde la variable de entorno PATH_FILES_IN almacena los archivos de extension txt que seran procesados por el programa, cualquier otro archivo que no tenga esta extension, no sera leido.
+PATH_FILES_OUT contiene como salida el conteo de palabras de cada archivo de extension txt que se encuentra en la carpeta input, cada archivo de salida tendra como nombre asociado el nombre del texto que leyo.
+
+La compilacion del programa esta dada por el archivo make, en consola es:
+
+/Ruta_1/Ruta_2/.../Ruta_n/Prueba1_Parte2$ make
+Ruta_1/Ruta_2/.../Ruta_n/Prueba1_Parte2$ ./app
+
+nota: Ruta_1 hasta Ruta_n son rutas de ejemplo que varian segun el computador donde se ejecute, la carpeta Prueba1_Parte2 es estandar ya que es la ubicacion del archivo.
+
+la ejecucion deberia mostrar algo asi en pantalla(lo que puede cambiar es el orden de los hilos ya que no necesariamente terminan su ejecion en orden)
+
+Archivo Input/cuento5.txt, procesado por el thread 0
+Archivo Input/cuento2.txt, procesado por el thread 1
+Archivo Input/cuento4.txt, procesado por el thread 3
+Archivo Input/cuento3.txt, procesado por el thread 0
+Archivo Input/cuento1.txt, procesado por el thread 2
+

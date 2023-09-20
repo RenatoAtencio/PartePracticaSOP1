@@ -14,12 +14,6 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-// Definición de las variables de entorno
-const string EXTENSION = "txt";
-const string PATH_FILES_IN = "Input";
-const string PATH_FILES_OUT = "Output";
-const int AMOUNT_THREADS = 4;
-
 mutex mtx;//evito que hilos multiples accedan al mismo archivo
 condition_variable cv;
 queue<string> filesToProcess;
@@ -58,7 +52,8 @@ void processFile(int threadId) {
         inputFile.close();
 
         string fileName = filePath.substr(filePath.find_last_of('/') + 1);
-        string outputPath = PATH_FILES_OUT + "/" + fileName;
+        string path = getenv("PATH_FILES_OUT");
+        string outputPath = path + "/" + fileName;
     
 
         ofstream outputFile(outputPath);
@@ -81,13 +76,15 @@ void processFile(int threadId) {
 // Función para procesar archivos en paralelo
 void processFilesInParallel() {
     vector<thread> threads;
+    int hilo = stoi(getenv("AMOUNT_THREADS"));
 
-    for (int i = 0; i < AMOUNT_THREADS; i++) {
+    for (int i = 0; i < hilo ; i++) {
         threads.emplace_back(processFile, i);
     }
 
-    for (const auto& entry : fs::directory_iterator(PATH_FILES_IN)) {
-        if (entry.is_regular_file() && entry.path().extension() == "." + EXTENSION) {
+    for (const auto& entry : fs::directory_iterator(getenv("PATH_FILES_IN"))) {
+        string temp = getenv("EXTENSION");
+        if (entry.is_regular_file() && entry.path().extension() == "." + temp) {
             string filePath = entry.path().string();
             {
                 lock_guard<mutex> lock(mtx);

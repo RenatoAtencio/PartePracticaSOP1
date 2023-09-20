@@ -57,7 +57,7 @@ void processFile(int threadId) {
     
 
         ofstream outputFile(outputPath);
-        if (!outputFile.is_open()) {
+        if (!outputFile.is_open()) {//verifica si se encuentra la carpeta Output para crear los archivos de salida
             cerr << "No se pudo crear el archivo de salida." << endl;
             return;
         }
@@ -84,7 +84,7 @@ void processFilesInParallel() {
 
     for (const auto& entry : fs::directory_iterator(getenv("PATH_FILES_IN"))) {
         string temp = getenv("EXTENSION");
-        if (entry.is_regular_file() && entry.path().extension() == "." + temp) {
+        if (entry.is_regular_file() && entry.path().extension() == "." + temp) {//si el archivo es de extension txt, se agrega a la cola filesToProcess para ser leida por algun hilo que termine de procesar un archivo txt del input
             string filePath = entry.path().string();
             {
                 lock_guard<mutex> lock(mtx);

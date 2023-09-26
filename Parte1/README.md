@@ -15,6 +15,8 @@ Donde:
     username: Nombre del usuario
     password: Password del usuario
     vector: vector de números en el siguiente formato -> ej: 1,4,2,5,2,1
+Ej completo:
+    ./app -u Pol -p password1 -v 4,12,5,2,3,1,4
 
 ## La aplicacion
 El programa es un sistema de usuarios que muestra la siguiente salida

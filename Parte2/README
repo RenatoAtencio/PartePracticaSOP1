@@ -7,6 +7,8 @@ AMOUNT_THREADS=4
 Donde la variable de entorno PATH_FILES_IN almacena los archivos de extension txt que seran procesados por el programa, cualquier otro archivo que no tenga esta extension, no sera leido.
 PATH_FILES_OUT contiene como salida el conteo de palabras de cada archivo de extension txt que se encuentra en la carpeta input, cada archivo de salida tendra como nombre asociado el nombre del texto que leyo.
 
+Se debe tener una carpeta Output creada en la carpeta Parte2 (Al pasar a github se borran las carpetas vacias)
+
 para pasar las variables en el .env a variables de entorno se debe escribir en la consola:
     set -o allexport
     source Archivo.env

@@ -53,7 +53,7 @@ public:
         return opcionSeleccionada;
     }
 
-    // Funciones para permisos
+    // Funcion para verificar permisos
     bool verificarPermiso(int permiso) {
         for (int p : vectorPermisos) {
             if (p == permiso) {
@@ -63,6 +63,7 @@ public:
         return false;
     }
 
+    // metodos 
     void salir() {
         cout << "Saliendo del programa, espere 2 segundos" << endl;
         std::this_thread::sleep_for(std::chrono::seconds(2));
